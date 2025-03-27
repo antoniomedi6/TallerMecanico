@@ -16,8 +16,6 @@ public record Vehiculo(String marca, String modelo, String matricula) {
         Objects.requireNonNull(marca, "La marca no puede ser nula.");
         if (!marca.matches(ER_MARCA)) {
             throw new IllegalArgumentException("La marca no tiene un formato válido.");
-        } else if (marca.isBlank()) {
-            throw new IllegalArgumentException("La marca no tiene un formato válido.");
         }
     }
 

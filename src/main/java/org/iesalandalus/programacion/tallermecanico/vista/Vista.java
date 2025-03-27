@@ -225,7 +225,7 @@ public class Vista {
     }
 
     private void listarRevisiones() {
-        Consola.mostrarCabecera("Listar Revisiones");
+        Consola.mostrarCabecera("Listar Trabajos");
         try {
             for (Revision revision : controlador.getRevisiones()) {
                 System.out.println(revision);
@@ -236,7 +236,7 @@ public class Vista {
     }
 
     private void listarRevisionesCliente() {
-        Consola.mostrarCabecera("Listar Revisiones por Cliente");
+        Consola.mostrarCabecera("Listar Trabajos por Cliente");
         try {
             Cliente cliente = Consola.leerClienteDni();
             for (Revision revision : controlador.getRevisiones(cliente)) {
@@ -248,7 +248,7 @@ public class Vista {
     }
 
     private void listarRevisionesVehiculo() {
-        Consola.mostrarCabecera("Listar Revisiones por Vehículo");
+        Consola.mostrarCabecera("Listar Trabajos por Vehículo");
         try {
             Vehiculo vehiculo = Consola.leerVehiculoMatricula();
             for (Revision revision : controlador.getRevisiones(vehiculo)) {

@@ -3,9 +3,9 @@ package org.iesalandalus.programacion.tallermecanico.modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Revisiones;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.Vehiculos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Trabajos;
+import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class Modelo {
 
     private Clientes clientes;
     private Vehiculos vehiculos;
-    private Revisiones revisiones;
+    private Trabajos revisiones;
 
     public Modelo() {
         comenzar();
@@ -25,7 +25,7 @@ public class Modelo {
     public void comenzar() {
         clientes = new Clientes();
         vehiculos = new Vehiculos();
-        revisiones = new Revisiones();
+        revisiones = new Trabajos();
     }
 
     public void terminar() {
@@ -64,11 +64,11 @@ public class Modelo {
         return new Cliente(clientes.modificar(cliente, nombre, telefono));
     }
 
-    public Revision anadirHoras(Revision revision, int horas) {
+    public Revision anadirHoras(Revision revision, int horas) throws TallerMecanicoExcepcion {
         return new Revision(revisiones.anadirHoras(revision, horas));
     }
 
-    public Revision anadirPrecioMaterial(Revision revision, float precioMaterial) {
+    public Revision anadirPrecioMaterial(Revision revision, float precioMaterial) throws TallerMecanicoExcepcion {
         return new Revision(revisiones.anadirPrecioMaterial(revision, precioMaterial));
     }
 

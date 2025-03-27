@@ -98,7 +98,7 @@ public abstract class Trabajo {
         return horas;
     }
 
-    public void anadirHoras(int horas) {
+    public void anadirHoras(int horas) throws TallerMecanicoExcepcion {
         if (horas <= 0) {
             throw new IllegalArgumentException("Las horas a añadir deben ser mayores que cero.");
         } else if (estaCerrado()) {
@@ -112,7 +112,7 @@ public abstract class Trabajo {
         return fechaFin != null;
     }
 
-    public void cerrar(LocalDate fechaFin) {
+    public void cerrar(LocalDate fechaFin) throws TallerMecanicoExcepcion {
         Objects.requireNonNull(fechaFin, "La fecha de fin no puede ser nula.");
         if (estaCerrado()) {
             throw new TallerMecanicoExcepcion("El trabajo ya está cerrado.");

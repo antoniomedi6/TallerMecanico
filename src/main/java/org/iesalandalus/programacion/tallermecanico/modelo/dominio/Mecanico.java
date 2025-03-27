@@ -3,7 +3,6 @@ package org.iesalandalus.programacion.tallermecanico.modelo.dominio;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Mecanico extends Trabajo{
 
@@ -25,7 +24,7 @@ public class Mecanico extends Trabajo{
         return precioMaterial;
     }
 
-    public void anadirPrecioMaterial(float precioMaterial) {
+    public void anadirPrecioMaterial(float precioMaterial) throws TallerMecanicoExcepcion {
         if (precioMaterial <= 0) {
             throw new IllegalArgumentException("El precio del material a añadir debe ser mayor que cero.");
         } else if (estaCerrado()) {

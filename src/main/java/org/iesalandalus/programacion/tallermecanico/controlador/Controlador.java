@@ -58,7 +58,7 @@ public class Controlador {
         return modelo.buscar(revision);
     }
 
-    public boolean modificar(Cliente cliente, String nombre, String telefono) throws TallerMecanicoExcepcion {
+    public Cliente modificar(Cliente cliente, String nombre, String telefono) throws TallerMecanicoExcepcion {
         return modelo.modificar(cliente, nombre, telefono);
     }
 
