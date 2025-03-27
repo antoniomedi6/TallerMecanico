@@ -5,6 +5,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Traba
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
 
 public interface IFuenteDatos {
+
     Clientes crearClientes();
 
     Vehiculos crearVehiculos();

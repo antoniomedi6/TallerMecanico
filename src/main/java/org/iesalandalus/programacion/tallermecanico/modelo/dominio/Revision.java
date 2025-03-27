@@ -16,11 +16,7 @@ public class Revision extends Trabajo {
 
     @Override
     public float getPrecioEspecifico() {
-        if (estaCerrado()) {
-            return (getHoras() * FACTOR_HORA);
-        } else {
-            return 0;
-        }
+        return (estaCerrado() ? getHoras() * FACTOR_HORA : 0);
     }
 
     @Override

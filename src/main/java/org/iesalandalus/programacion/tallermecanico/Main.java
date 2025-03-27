@@ -1,7 +1,6 @@
 package org.iesalandalus.programacion.tallermecanico;
 
 import org.iesalandalus.programacion.tallermecanico.controlador.Controlador;
-import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 
