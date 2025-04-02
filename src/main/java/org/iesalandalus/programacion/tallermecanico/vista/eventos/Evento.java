@@ -1,9 +1,9 @@
-package org.iesalandalus.programacion.tallermecanico.vista;
+package org.iesalandalus.programacion.tallermecanico.vista.eventos;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Opcion {
+public enum Evento {
     INSERTAR_CLIENTE(11, "Insertar cliente."),
     BUSCAR_CLIENTE(12, "Buscar cliente."),
     BORRAR_CLIENTE(13, "Borrar cliente."),
@@ -27,15 +27,15 @@ public enum Opcion {
 
     private final int numeroOpcion;
     private final String texto;
-    private static final Map<Integer, Opcion> opciones = new HashMap<>();
+    private static final Map<Integer, Evento> opciones = new HashMap<>();
 
     static {
-        for (Opcion opcion : values()) {
-            opciones.put(opcion.numeroOpcion, opcion);
+        for (Evento evento : values()) {
+            opciones.put(evento.numeroOpcion, evento);
         }
     }
 
-    private Opcion(int numeroOpcion, String texto) {
+    private Evento(int numeroOpcion, String texto) {
         this.numeroOpcion = numeroOpcion;
         this.texto = texto;
     }
@@ -44,7 +44,7 @@ public enum Opcion {
         return opciones.containsKey(numeroOpcion);
     }
 
-    public static Opcion get(int numeroOpcion) {
+    public static Evento get(int numeroOpcion) {
         if (!esValida(numeroOpcion)) {
             throw new IllegalArgumentException("El número de la opción no es correcto.");
         }
