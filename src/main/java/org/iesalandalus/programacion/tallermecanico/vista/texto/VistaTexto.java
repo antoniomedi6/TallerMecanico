@@ -119,7 +119,7 @@ public class VistaTexto implements org.iesalandalus.programacion.tallermecanico.
     @Override
     public void mostrarVehiculo(Vehiculo vehiculo) {
         System.out.println((vehiculo != null ? vehiculo : "No existe ningún vehículo para ese cliente, trabajo y fecha"));
-);
+
     }
 
     @Override

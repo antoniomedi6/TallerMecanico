@@ -1,109 +1,67 @@
 package org.iesalandalus.programacion.tallermecanico.controlador;
 
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
-import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Revision;
-import org.iesalandalus.programacion.tallermecanico.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
-import org.iesalandalus.programacion.tallermecanico.vista.texto.VistaTexto;
+import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
+import org.iesalandalus.programacion.tallermecanico.vista.eventos.ReceptorEventos;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
-public class Controlador {
+public class Controlador implements IControlador {
 
     private final Modelo modelo;
     private final Vista vista;
 
     public Controlador(Modelo modelo, Vista vista) {
-        if (modelo == null || vista == null) {
-            throw new NullPointerException("El modelo y la vista no pueden ser nulos.");
-        }
+        Objects.requireNonNull(modelo,"El modelo no puede ser nulo.");
+        Objects.requireNonNull(vista, "La vista no puede ser nula.");
         this.modelo = modelo;
         this.vista = vista;
-        this.vista.setControlador(this);
+        this.vista.getGestorEventos().suscribir((ReceptorEventos) this, Evento.values());
     }
 
+    @Override
     public void comenzar() {
         modelo.comenzar();
         vista.comenzar();
     }
 
+    @Override
     public void terminar() {
         vista.terminar();
         modelo.terminar();
     }
 
-    public void insertar(Cliente cliente) throws TallerMecanicoExcepcion {
-        modelo.insertar(cliente);
-    }
-
-    public void insertar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
-        modelo.insertar(vehiculo);
-    }
-
-    public void insertar(Revision revision) throws TallerMecanicoExcepcion {
-        modelo.insertar(revision);
-    }
-
-    public Cliente buscar(Cliente cliente) {
-        return modelo.buscar(cliente);
-    }
-
-    public Vehiculo buscar(Vehiculo vehiculo) {
-        return modelo.buscar(vehiculo);
-    }
-
-    public Revision buscar(Revision revision) {
-        return modelo.buscar(revision);
-    }
-
-    public Cliente modificar(Cliente cliente, String nombre, String telefono) throws TallerMecanicoExcepcion {
-        return modelo.modificar(cliente, nombre, telefono);
-    }
-
-    public Revision anadirHoras(Revision revision, int horas) throws TallerMecanicoExcepcion {
-        return modelo.anadirHoras(revision, horas);
-    }
-
-    public Revision anadirPrecioMaterial(Revision revision, float precioMaterial) throws TallerMecanicoExcepcion {
-        return modelo.anadirPrecioMaterial(revision, precioMaterial);
-    }
-
-    public Revision cerrar(Revision revision, LocalDate fechaFin) throws TallerMecanicoExcepcion {
-        return modelo.cerrar(revision, fechaFin);
-    }
-
-    public void borrar(Cliente cliente) throws TallerMecanicoExcepcion {
-        modelo.borrar(cliente);
-    }
-
-    public void borrar(Vehiculo vehiculo) throws TallerMecanicoExcepcion {
-        modelo.borrar(vehiculo);
-    }
-
-    public void borrar(Revision revision) throws TallerMecanicoExcepcion {
-        modelo.borrar(revision);
-    }
-
-    public List<Cliente> getClientes() {
-        return modelo.getClientes();
-    }
-
-    public List<Vehiculo> getVehiculos() {
-        return modelo.getVehiculos();
-    }
-
-    public List<Revision> getRevisiones() {
-        return modelo.getTrabajos();
-    }
-
-    public List<Revision> getRevisiones(Cliente cliente) {
-        return modelo.getTrabajos(cliente);
-    }
-
-    public List<Revision> getRevisiones(Vehiculo vehiculo) {
-        return modelo.getTrabajos(vehiculo);
+    @Override
+    public void actualizar(Evento evento) {
+        try {
+            String resultado = "";
+            switch (evento) {
+                case INSERTAR_CLIENTE -> { modelo.insertar(vista.leerCliente()); resultado = "Cliente insertado correctamente."; }
+                case INSERTAR_VEHICULO -> { modelo.insertar(vista.leerNuevoVehiculo()); resultado = "Vehículo insertado correctamente."; }
+                case INSERTAR_TRABAJO -> { modelo.insertar(vista.leerTrabajoVehiculo()); resultado = "Trabajo insertado correctamente."; }
+                case BUSCAR_CLIENTE -> { modelo.buscar(vista.leerClienteDni()); resultado = "Cliente encontrado."; }
+                case BUSCAR_VEHICULO -> { modelo.buscar(vista.leerVehiculoMatricula()); resultado = "Vehículo encontrado."; }
+                case BUSCAR_TRABAJO -> {modelo.buscar(vista.leerTrabajoVehiculo()); resultado = "Trabajo encontrado."; }
+                case BORRAR_CLIENTE -> {modelo.borrar(vista.leerClienteDni()); resultado = "Cliente borrado.";}
+                case BORRAR_VEHICULO -> {modelo.borrar(vista.leerVehiculoMatricula()); resultado = "Vehículo borrado.";}
+                case BORRAR_TRABAJO -> {modelo.borrar(vista.leerTrabajoVehiculo()); resultado = "Trabajo borrado.";}
+                case LISTAR_CLIENTES -> modelo.getClientes();
+                case LISTAR_VEHICULOS -> modelo.getVehiculos();
+                case LISTAR_TRABAJOS -> modelo.getTrabajos();
+                case LISTAR_TRABAJOS_CLIENTE -> modelo.getTrabajos(vista.leerClienteDni());
+                case LISTAR_TRABAJOS_VEHICULO -> modelo.getTrabajos(vista.leerVehiculoMatricula());
+                case MODIFICAR_CLIENTE -> {modelo.modificar(vista.leerCliente(), vista.leerNuevoNombre(), vista.leerNuevoTelefono()); resultado = "Cliente modificado correctamente.";}
+                case ANADIR_HORAS_TRABAJO -> {modelo.anadirHoras(vista.leerTrabajoVehiculo(), vista.leerHoras()); resultado = "Horas añadidas correctamente.";}
+                case ANADIR_PRECIO_MATERIAL_TRABAJO -> {modelo.anadirPrecioMaterial(vista.leerTrabajoVehiculo(), vista.leerPrecioMaterial()); resultado = "Precio material añadido correctamente.";}
+                case CERRAR_TRABAJO -> {modelo.cerrar(vista.leerTrabajoVehiculo(), vista.leerFechaCierre()); resultado = "Trabajo cerrado correctamente.";}
+                case SALIR -> modelo.terminar();
+            }
+            if (resultado.isBlank()) {
+                vista.notificarResultado(evento, resultado, true);
+            }
+        } catch (Exception e) {
+            vista.notificarResultado(evento, e.getMessage(), false);
+        }
     }
 }
