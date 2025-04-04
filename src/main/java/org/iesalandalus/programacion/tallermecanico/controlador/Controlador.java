@@ -3,7 +3,6 @@ package org.iesalandalus.programacion.tallermecanico.controlador;
 import org.iesalandalus.programacion.tallermecanico.modelo.Modelo;
 import org.iesalandalus.programacion.tallermecanico.vista.Vista;
 import org.iesalandalus.programacion.tallermecanico.vista.eventos.Evento;
-import org.iesalandalus.programacion.tallermecanico.vista.eventos.ReceptorEventos;
 
 import java.util.Objects;
 
@@ -17,7 +16,7 @@ public class Controlador implements IControlador {
         Objects.requireNonNull(vista, "La vista no puede ser nula.");
         this.modelo = modelo;
         this.vista = vista;
-        this.vista.getGestorEventos().suscribir((ReceptorEventos) this, Evento.values());
+        this.vista.getGestorEventos().suscribir(this, Evento.values());
     }
 
     @Override

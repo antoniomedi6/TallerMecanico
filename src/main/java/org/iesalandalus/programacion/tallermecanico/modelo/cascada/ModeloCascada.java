@@ -4,7 +4,6 @@ import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepci
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.FuenteDatosMemoria;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Trabajos;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.memoria.Vehiculos;
 
@@ -22,6 +21,9 @@ public class ModeloCascada implements org.iesalandalus.programacion.tallermecani
         public ModeloCascada(FabricaFuenteDatos fabricaFuenteDatos) {
             Objects.requireNonNull(fabricaFuenteDatos, "La fuente de datos no puede ser nula.");
             IFuenteDatos fuenteDatos = fabricaFuenteDatos.crear();
+            clientes = fuenteDatos.crearClientes();
+            vehiculos = fuenteDatos.crearVehiculos();
+            trabajos = fuenteDatos.crearTrabajos();
             comenzar();
         }
 
