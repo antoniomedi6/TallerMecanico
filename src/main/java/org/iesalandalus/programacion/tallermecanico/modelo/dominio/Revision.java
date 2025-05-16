@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Revision extends Trabajo {
 
-    public static final int FACTOR_HORA = 35;
+    private static final float FACTOR_HORA = 35F;
 
     public Revision(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio) {
         super(cliente, vehiculo, fechaInicio);
@@ -16,15 +16,17 @@ public class Revision extends Trabajo {
 
     @Override
     public float getPrecioEspecifico() {
-        return (estaCerrado() ? getHoras() * FACTOR_HORA : 0);
+        return (estaCerrado()) ? FACTOR_HORA * getHoras() : 0;
     }
 
     @Override
     public String toString() {
+        String cadena;
         if (!estaCerrado()) {
-            return String.format("Revisión -> %s - %s (%s - ): %d horas",getCliente().toString(), getVehiculo().toString(), getFechaInicio().format(FORMATO_FECHA), getHoras());
+            cadena = String.format("Revisión -> %s - %s (%s - ): %d horas", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getHoras());
         } else {
-            return String.format("Revisión -> %s - %s (%s - %s): %d horas, %.2f € total", getCliente().toString(), getVehiculo().toString(), getFechaInicio().format(FORMATO_FECHA),getFechaFin().format(FORMATO_FECHA), getHoras(), getPrecio());
+            cadena = String.format("Revisión -> %s - %s (%s - %s): %d horas, %.2f € total", getCliente(), getVehiculo(), getFechaInicio().format(FORMATO_FECHA), getFechaFin().format(FORMATO_FECHA), getHoras(), getPrecio());
         }
+        return cadena;
     }
 }

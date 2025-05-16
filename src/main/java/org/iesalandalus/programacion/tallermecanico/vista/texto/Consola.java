@@ -9,50 +9,51 @@ import java.time.format.DateTimeParseException;
 
 public class Consola {
 
-    private static final String CADENA_FORMATO_FECHA = "dd/MM/yyyy";
+    private static final String CADENA_FORMATO_FECHA ="dd/MM/yyyy";
 
     private Consola() {}
 
-    public static void mostrarCabecera(String mensaje) {
+    static void mostrarCabecera(String mensaje) {
         System.out.printf("%n%s%n", mensaje);
-        System.out.printf("-".repeat(mensaje.length()).concat("%n%n"));
+        String formatoStr = "%0" + mensaje.length() + "d%n";
+        System.out.println(String.format(formatoStr, 0).replace("0", "-"));
     }
 
-    public static void mostrarMenu() {
+    static void mostrarMenu() {
         mostrarCabecera("Gestión de un taller mecánico.");
-        for (Evento evento : Evento.values()) {
-            System.out.print(evento);
+        for (Evento opcion : Evento.values()) {
+            System.out.printf("%d.- %s%n", opcion.getCodigo(), opcion);
         }
     }
 
-    public static Evento elegirOpcion() {
-        Evento evento = null;
+    static Evento elegirOpcion() {
+        Evento opcion = null;
         do {
             try {
-                evento = Evento.get(leerEntero("\nElige una opción: "));
+                opcion = Evento.get(leerEntero("\nElige un opción: "));
             } catch (IllegalArgumentException e) {
                 System.out.printf("ERROR: %s%n", e.getMessage());
             }
-        } while (evento == null);
-        return evento;
+        } while (opcion == null);
+        return opcion;
     }
 
-    public static int leerEntero(String mensaje) {
+    static int leerEntero(String mensaje) {
         System.out.print(mensaje);
         return Entrada.entero();
     }
 
-    public static float leerReal(String mensaje) {
+    static float leerReal(String mensaje) {
         System.out.print(mensaje);
         return Entrada.real();
     }
 
-    public static String leerCadena(String mensaje) {
+    static String leerCadena(String mensaje) {
         System.out.print(mensaje);
         return Entrada.cadena();
     }
 
-    public static LocalDate leerFecha(String mensaje) {
+    static LocalDate leerFecha(String mensaje) {
         LocalDate fecha;
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern(CADENA_FORMATO_FECHA);
         mensaje = String.format("%s (%s): ", mensaje, CADENA_FORMATO_FECHA);
@@ -63,7 +64,5 @@ public class Consola {
         }
         return fecha;
     }
-
-
 
 }
