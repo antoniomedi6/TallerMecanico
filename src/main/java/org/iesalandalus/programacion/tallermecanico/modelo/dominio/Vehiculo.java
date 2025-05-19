@@ -8,12 +8,12 @@ public record Vehiculo(String marca, String modelo, String matricula) {
 	private static final String ER_MATRICULA = "\\d{4}[^\\W_AEIOUa-z]{3}";
 	
 	public Vehiculo {
-		valoidarMarca(marca);
+		validarMarca(marca);
 		validarModelo(modelo);
 		validarMatricula(matricula);
 	}
 
-	private void valoidarMarca(String marca) {
+	private void validarMarca(String marca) {
 		Objects.requireNonNull(marca, "La marca no puede ser nula.");
 		if (!marca.matches(ER_MARCA)) {
 			throw new IllegalArgumentException("La marca no tiene un formato válido.");
